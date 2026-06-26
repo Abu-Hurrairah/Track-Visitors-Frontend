@@ -202,43 +202,6 @@ The API related logic is located inside:
 ```text
 lib/APIHandler/
 lib/GetPostAllDataFromAPI/
-```
-
----
-
-## Important GitHub Upload Notes
-
-Do not upload generated Flutter folders or local machine files such as:
-
-```text
-.dart_tool/
-build/
-.idea/
-.vscode/
-*.iml
-.flutter-plugins
-.flutter-plugins-dependencies
-.metadata
-android/key.properties
-*.jks
-*.keystore
-```
-
-These files are generated locally and are not required for GitHub. A proper Flutter `.gitignore` should be used before uploading the project.
-
----
-
-## Future Improvements
-
-- Improve UI responsiveness for different screen sizes
-- Add better form validation and error messages
-- Add loading indicators for all API requests
-- Add secure token based authentication
-- Improve dashboard charts and analytics
-- Add notification support for alerts
-- Add unit and widget tests
-- Improve API error handling and offline state handling
-- Add light and dark theme support
 
 ---
 

@@ -202,9 +202,10 @@ The API related logic is located inside:
 ```text
 lib/APIHandler/
 lib/GetPostAllDataFromAPI/
-
+```
 ---
 
 ## Disclaimer
 
 This project was developed for academic and demonstration purposes. Before production deployment, additional improvements are required in authentication, API security, error handling, data privacy, testing, and deployment configuration.
+```

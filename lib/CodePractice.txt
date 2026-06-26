@@ -1,0 +1,309 @@
+// Data send by Arguments
+final http.Response response = await http.get(
+        uri.replace(queryParameters: {
+          'organizationName': orgname.text,
+          'address': Address.text,
+          'contactNo': Contact_No.text,
+          'email': Email.text,
+          'password': Password.text,
+        }),
+      );
+
+
+
+// Design
+Container(
+  margin: EdgeInsets.fromLTRB(0, 15, 0,
+      15), // Adjust the top margin as needed
+  padding: EdgeInsets.all(
+      10), // Adjust the padding as needed
+  decoration: BoxDecoration(
+    color: Colors.blue[
+        200], // Adjust the color as needed
+    borderRadius: BorderRadius.circular(
+        8), // Adjust the border radius as needed
+    boxShadow: [
+      BoxShadow(
+        color:
+            Colors.grey.withOpacity(0.5),
+        spreadRadius: 3,
+        blurRadius: 7,
+        offset: Offset(0, 3),
+      ),
+    ],
+  ),
+  child: const Text(
+    "Group Members:",
+    style: TextStyle(
+      color: Colors.black,
+      fontWeight: FontWeight.bold,
+    ),
+  ),
+),
+Visibility(
+  visible:
+      _selectedMemberIndex == innerindex,
+  child: Column(
+    children: groupmemberlist[innerindex]
+        .groupMembers
+        .map((member) {
+      return Row(
+        mainAxisAlignment:
+            MainAxisAlignment.spaceAround,
+        children: [
+          Text(member),
+        ],
+      );
+    }).toList(),
+  ),
+),
+
+
+ElevatedButton.icon(
+                    onPressed: (){}, 
+                    icon: Icon(Icons.brush), 
+                    label: Text('Brush')
+                  ),
+
+
+
+
+final DateTime? value; // you can initialize it to null or any other initial value
+showDatePicker() async{
+  await showDatePicker(
+    context: context,
+    initialDate: value ?? DateTime.now(), // if no value provided use current datetime
+    firstDate: DateTime(2015), // years min
+    lastDate: DateTime.now(), // years max
+    locale: Locale("en_US"), // locale
+  );
+  if(value !=null)
+    setState(()=> value=value);
+}
+// value = this is the variable that  holds the date time picker selected value
+DateFormat.jm().format(value)    
+
+
+
+
+
+
+
+
+sort the visitors in the report alphabetically
+void _sortVisitorsByName() {
+  setState(() {
+    visitors.sort((a, b) => a['VisitorName'].compareTo(b['VisitorName']));
+  });
+}
+
+Future<void> getVisitorsReport(String startDate, String endDate) async {
+  try {
+    // ... (existing code)
+
+    setState(() {
+      visitors = jsonResponse.map((json) => Map<String, dynamic>.from(json)).toList();
+      _sortVisitorsByName(); // Add this line to sort visitors by name
+      print(jsonResponse);
+    });
+  } catch (e) {
+    // ... (existing code)
+  }
+}
+
+
+
+sort visitors based on the "Visit Date" column
+void _sortVisitorsByDate() {
+  setState(() {
+    visitors.sort((a, b) => DateTime.parse(a['VisitDate']).compareTo(DateTime.parse(b['VisitDate'])));
+  });
+}
+
+Future<void> getVisitorsReport(String startDate, String endDate) async {
+  try {
+    // ... (existing code)
+
+    setState(() {
+      visitors = jsonResponse.map((json) => Map<String, dynamic>.from(json)).toList();
+      _sortVisitorsByDate(); // Add this line to sort visitors by visit date
+      print(jsonResponse);
+    });
+  } catch (e) {
+    // ... (existing code)
+  }
+}
+
+
+
+
+
+
+
+fixed row and column headings while scrolling
+import 'package:flutter/material.dart';
+
+class CameraConnectionScreen extends StatefulWidget {
+  const CameraConnectionScreen({Key? key}) : super(key: key);
+
+  @override
+  State<CameraConnectionScreen> createState() => _CameraConnectionScreenState();
+}
+
+class _CameraConnectionScreenState extends State<CameraConnectionScreen> {
+  // Your existing code...
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Column(
+          children: [
+            SizedBox(height: 10,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                // ... Your existing code ...
+              ],
+            ),
+            SizedBox(height: 10,),
+            Align(alignment: Alignment.topCenter,child: Text('Camera Connections',style: TextStyle(fontSize: 30,color: Colors.blue),)),
+            SizedBox(height: 20,),
+            if (buttonState == 'Edit')
+              Container(
+                padding: EdgeInsets.all(10.0),
+                color: Colors.yellow,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(
+                      'Edit Mode Enabled',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          buttonState = 'Add';
+                        });
+                      },
+                      child: Icon(Icons.close),
+                    ),
+                  ],
+                ),
+              ),
+            Expanded(
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: [
+                    // Header Row
+                    Container(
+                      color: Colors.grey[300]!,
+                      width: 140,
+                      child: Center(
+                        child: Text(
+                          '',
+                          style: TextStyle(
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                    for (int colIndex = 0; colIndex < columnNames.length; colIndex++)
+                      Container(
+                        color: Color(0xFF0CC0A7),
+                        width: 50,
+                        child: Align(
+                          alignment: Alignment.topCenter,
+                          child: Center(
+                            child: Text(
+                              generateAbbreviatedName(columnNames[colIndex]),
+                              style: TextStyle(
+                                fontSize: 19.0,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+            ),
+            Expanded(
+              child: SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Column(
+                    children: [
+                      // Data Rows
+                      ...List.generate(
+                        matrix.length,
+                        (rowIndex) => Row(
+                          children: [
+                            Container(
+                              color: Colors.grey[300]!,
+                              width: 140,
+                              child: Align(
+                                alignment: Alignment.topCenter,
+                                child: Center(
+                                  child: Text(
+                                    rowNames[rowIndex],
+                                    style: TextStyle(
+                                      fontSize: 19.0,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.blue,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            for (int colIndex = 0; colIndex < matrix[rowIndex].length; colIndex++)
+                              GestureDetector(
+                                onTap: buttonState == 'Edit'
+                                    ? () {
+                                  _showDialog(
+                                      rowIndex + 1, colIndex + 1, rowNames[rowIndex], columnNames[colIndex]);
+                                }
+                                    : null,
+                                child: Container(
+                                  height: 35,
+                                  width: 50,
+                                  color: Colors.white,
+                                  child: Center(
+                                    child: Text(
+                                      matrix[rowIndex][colIndex].toString(),
+                                      style: TextStyle(
+                                        fontSize: 18.0,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+
+
+
+
